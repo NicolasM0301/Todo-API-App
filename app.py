@@ -4,8 +4,9 @@ from fastapi import FastAPI
 app = FastAPI()
 
 tasks = [
-    Task(),
-    Task()
+    Task(description= "Clean house"),
+    Task(description= "Clean Room"),
+    Task(description= "Test3")
 ]
 
 
@@ -17,9 +18,12 @@ def root():
 def get_all_tasks():
     return tasks
 
-# @app.get("/")
-# def get_task():
-#     return "Hello World"
+@app.get("/get-task/{task_id}")
+def get_task(task_id: int):
+    for task in tasks:
+        if task.id == task_id:
+            return task
+     
 
 # @app.put("/")
 # def update_task():
@@ -32,3 +36,7 @@ def get_all_tasks():
 # @app.delete("/")
 # def delete_task():
 #     return "Hello World"
+
+@app.post("/")
+def post_tasks():
+    return None
