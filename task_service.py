@@ -1,6 +1,6 @@
 from task_model import Task
 from fastapi import FastAPI
-from task_service import *
+
 
 app = FastAPI()
 
@@ -11,22 +11,26 @@ task_list: list[Task] = [
 ]
 
 
-@app.get("/")
 def root():
     return "Hello World"
 
-@app.get("/tasks/all")
-def get_all():
-    return get_all_tasks()
 
-@app.get("/get-task/{task_id}")
-def get(task_id: int): 
-    return get_task
+def get_all_tasks():
+    return task_list
+
+
+def get_task(task_id: int): 
+    for task in task_list:
+        if task.id == task_id:
+            return task
+
+    return "Task not Found"
      
 
 @app.post("/task")
-def create(task: Task):
-    return create_task(task)
+def create_task(task: Task):
+    task_list.append(task)
+    return "Task Added"
 
 
 @app.put("/update/{task_id}")

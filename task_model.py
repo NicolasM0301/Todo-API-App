@@ -7,6 +7,10 @@ def increment():
     cur_id += 1
     return cur_id
 
+class CreateTask(BaseModel):
+    description: str = ""
+    isCompleted: bool = False
+    
 class Task(BaseModel):
     id: int
     description: str = ""
